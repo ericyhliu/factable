@@ -2,11 +2,7 @@
     analysis.py
 
     Reads from .pickle files from the already
-    trained classifiers to build the Vote Classifier,
-    implements factAnalysis to return tuple of a
-    boolean for whether or not an article is true
-    or false, accuracy and list of sentences and
-    their true/false labels
+    trained classifiers to build the Vote Classifier.
 '''
 
 
