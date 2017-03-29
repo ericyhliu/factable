@@ -1,5 +1,5 @@
 """
-    normalizeTextFiles.py
+    normalize.py
 
     Normalizes the true and false text dumps in
     the textDumps directory and normalizes them

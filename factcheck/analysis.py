@@ -1,10 +1,17 @@
 '''
     analysis.py
+
+    Reads from .pickle files from the already
+    trained classifiers to build the Vote Classifier,
+    implements factAnalysis to return tuple of a
+    boolean for whether or not an article is true
+    or false, accuracy and list of sentences and
+    their true/false labels
 '''
 
 
-from nltk import word_tokenize, sent_tokenize
 import pickle
+from nltk import word_tokenize, sent_tokenize
 from nltk.classify import ClassifierI
 from statistics import mode
 
@@ -22,40 +29,40 @@ class VoteClassifier(ClassifierI):
 
         return mode(votes)
 
-documentsFile = open('factcheck/saved_documents.pickle', 'rb')
+
+documentsFile = open('saved_documents.pickle', 'rb')
 documents = pickle.load(documentsFile)
 documentsFile.close()
 
-wordFeaturesFile = open('factcheck/saved_word_features.pickle', 'rb')
+wordFeaturesFile = open('saved_word_features.pickle', 'rb')
 wordFeatures = pickle.load(wordFeaturesFile)
 wordFeaturesFile.close()
 
-featureSetsFile = open("factcheck/saved_feature_set.pickle", "rb")
+featureSetsFile = open('saved_feature_set.pickle', "rb")
 featureSets = pickle.load(featureSetsFile)
 featureSetsFile.close()
 
 # Training and testing set
-open_file = open("factcheck/mnb.pickle", "rb")
+open_file = open('trainedClassifiers/mnb.pickle', 'rb')
 MultinomialNBClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open("factcheck/bnb.pickle", "rb")
+open_file = open('trainedClassifiers/bnb.pickle', 'rb')
 BernoulliNBClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open("factcheck/lreg.pickle", "rb")
+open_file = open('trainedClassifiers/lreg.pickle', 'rb')
 LogisticRegressionClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open("factcheck/lsvc.pickle", "rb")
+open_file = open('trainedClassifiers/lsvc.pickle', 'rb')
 LinearSVCClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open("factcheck/sgd.pickle", "rb")
+open_file = open('trainedClassifiers/sgd.pickle', 'rb')
 StochasticGradientDescentClassifier = pickle.load(open_file)
 open_file.close()
 
-# Vote Classifier
 voteClassifier = VoteClassifier(MultinomialNBClassifier,
                                 BernoulliNBClassifier,
                                 LogisticRegressionClassifier,
@@ -74,18 +81,22 @@ def findFeatures(document):
 
 def factAnalysis(text):
     text = sent_tokenize(text)
-    trueCount = 0.00
-    falseCount = 0.00
-    sentenceClass = []
+    trueCount = 0
+    falseCount = 0
+
+    sentenceLabels = []
     for sentence in text:
         features = findFeatures(sentence)
         if voteClassifier.classify(features):
             trueCount += 1
-            sentenceClass.append((sentence, True))
+            sentenceLabels.append((sentence, True))
         else:
             falseCount += 1
-            sentenceClass.append((sentence, False))
-    if trueCount > falseCount:
-        return True, 1.00 - falseCount/trueCount, sentenceClass
+            sentenceLabels.append((sentence, False))
+
+    if not sentenceLabels:
+        return False, False, False
+    elif trueCount > falseCount:
+        return True, 1 - falseCount/trueCount, sentenceLabels
     else:
-        return False, 1.00 - trueCount/falseCount, sentenceClass
+        return False, 1 - trueCount/falseCount, sentenceLabels
