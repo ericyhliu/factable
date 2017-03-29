@@ -26,36 +26,36 @@ class VoteClassifier(ClassifierI):
         return mode(votes)
 
 
-documentsFile = open('saved_documents.pickle', 'rb')
+documentsFile = open('factcheck/saved_documents.pickle', 'rb')
 documents = pickle.load(documentsFile)
 documentsFile.close()
 
-wordFeaturesFile = open('saved_word_features.pickle', 'rb')
+wordFeaturesFile = open('factcheck/saved_word_features.pickle', 'rb')
 wordFeatures = pickle.load(wordFeaturesFile)
 wordFeaturesFile.close()
 
-featureSetsFile = open('saved_feature_set.pickle', "rb")
+featureSetsFile = open('factcheck/saved_feature_set.pickle', "rb")
 featureSets = pickle.load(featureSetsFile)
 featureSetsFile.close()
 
 # Training and testing set
-open_file = open('trainedClassifiers/mnb.pickle', 'rb')
+open_file = open('factcheck/trainedClassifiers/mnb.pickle', 'rb')
 MultinomialNBClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open('trainedClassifiers/bnb.pickle', 'rb')
+open_file = open('factcheck/trainedClassifiers/bnb.pickle', 'rb')
 BernoulliNBClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open('trainedClassifiers/lreg.pickle', 'rb')
+open_file = open('factcheck/trainedClassifiers/lreg.pickle', 'rb')
 LogisticRegressionClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open('trainedClassifiers/lsvc.pickle', 'rb')
+open_file = open('factcheck/trainedClassifiers/lsvc.pickle', 'rb')
 LinearSVCClassifier = pickle.load(open_file)
 open_file.close()
 
-open_file = open('trainedClassifiers/sgd.pickle', 'rb')
+open_file = open('factcheck/trainedClassifiers/sgd.pickle', 'rb')
 StochasticGradientDescentClassifier = pickle.load(open_file)
 open_file.close()
 
@@ -89,6 +89,10 @@ def factAnalysis(text):
         else:
             falseCount += 1
             sentenceLabels.append((sentence, False))
+
+    print(trueCount)
+    print(falseCount)
+    print(sentenceLabels)
 
     if not sentenceLabels:
         return False, False, False
