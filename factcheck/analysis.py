@@ -90,10 +90,6 @@ def factAnalysis(text):
             falseCount += 1
             sentenceLabels.append((sentence, False))
 
-    print(trueCount)
-    print(falseCount)
-    print(sentenceLabels)
-
     if not sentenceLabels:
         return False, False, False
     elif trueCount > falseCount:

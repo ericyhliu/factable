@@ -1,3 +1,11 @@
+"""
+    testurl.py
+
+    Uses factcheck to test on a URL
+    in the console.
+"""
+
+
 import requests
 from bs4 import BeautifulSoup
 from newspaper import Article
@@ -5,21 +13,20 @@ import factcheck
 from django.core.exceptions import ValidationError
 from django.forms import URLField
 
-#def validate_url(url):
-#    url_form_field = URLField()
-#    try:
-#        url = url_form_field.clean(url)
-#    except ValidationError:
-#        return False
-#    return True
+
+def validate_url(url):
+    url_form_field = URLField()
+    try:
+        url = url_form_field.clean(url)
+    except ValidationError:
+        return False
+    return True
 
 while (True):
     inp = input('Enter a link: ')
 
-
     if inp == 'q':
         exit()
-
 
     if validate_url(inp):
         try:
