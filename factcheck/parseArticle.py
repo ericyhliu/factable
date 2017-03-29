@@ -1,5 +1,10 @@
 """
     parseArticle.py
+
+    Uses the Newspaper API to efficiently retrieve
+    article content, however if that does not work,
+    manually overrides by using BeautifulSoup to
+    parse out only p content.
 """
 
 
