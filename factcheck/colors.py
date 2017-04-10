@@ -7,12 +7,22 @@
 
 
 def verdictColor(x):
+    '''
+    Returns CSS of associated colors with a true or false verdict
+
+    :return: string of CSS and color code
+    '''
     if x == 'True':
         return 'color: #008000;'
     return 'color: #FF0000;'
 
 
 def confidenceColor(x):
+    '''
+    Returns CSS of associated colors depending on the confidence
+
+    :return: string of CSS and color code
+    '''
     if x > 0.9:
         return 'color: #008000;'
     elif x > 0.8:
@@ -36,6 +46,12 @@ def confidenceColor(x):
 
 
 def sentenceColor(x):
+    '''
+    Returns CSS of associated colors with a true or false verdict
+    for a specific sentence
+
+    :return: string of CSS and color code
+    '''
     if x:
         return 'color: #008000;'
     return 'color: #FF0000;'
