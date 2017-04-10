@@ -67,6 +67,14 @@ voteClassifier = VoteClassifier(MultinomialNBClassifier,
 
 
 def findFeatures(document):
+    '''
+    Goes through document by word token and returns dictionary of
+    word, boolean pairs, with the boolean representing if the word
+    belongs to the word features set
+
+    :return: dict of word and boolean of if the word exists
+             in wordFeatures
+    '''
     words = word_tokenize(document)
     features = {}
     for w in wordFeatures:
@@ -76,6 +84,16 @@ def findFeatures(document):
 
 
 def factAnalysis(text):
+    '''
+    Goes through text, tokenizes by sentence and returns
+    a tuple containing a boolean representing if overall the
+    text is real or fake, a confidence score determined by
+    the amount of votes against the verdict and list of tuples
+    containing the specific sentence and boolean representing
+    if the sentence is true or fake
+
+    :return: tuple of boolean, double, and list
+    '''
     text = sent_tokenize(text)
     trueCount = 0
     falseCount = 0
