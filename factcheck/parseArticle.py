@@ -14,6 +14,14 @@ from newspaper import Article
 
 
 def getArticleContent(query):
+    '''
+    Parses out the text content of the article by first
+    trying to use the Newspaper API, but if that fails
+    due to restrictions on the website itself, then uses
+    BeautifulSoup to grab the <p> content
+
+    :return: string of article text
+    '''
     try:
         article = Article(url=query.strip(' '), language='en')
         article.download()
